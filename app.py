@@ -10,6 +10,20 @@ from tensorflow.keras.utils import custom_object_scope
 from tensorflow.keras.applications.inception_v3 import preprocess_input
 from PIL import Image
 from flask import jsonify
+import gdown
+
+# ==== Download model otomatis dari Google Drive ====
+model_links = {
+    "models/cnn_custom_model.h5": "https://drive.google.com/uc?id=1-8YfBJ_MbL_BrjfSj7jE9QZPF3pi6uKO",
+    "models/inceptionv3_model.h5": "https://drive.google.com/uc?id=1-30rj2Te3Yyb6w1f6EApVJr2QkQMVANS",
+    "models/inceptionresnet_model.h5": "https://drive.google.com/uc?id=1-40NJp5YuZzNsOjsbdkIuy3gRlcy2ovJ",
+}
+
+for path, url in model_links.items():
+    if not os.path.exists(path):
+        print(f"📥 Downloading model: {path}")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        gdown.download(url, path, quiet=False)
 
 # ==== Custom Layer ====
 class CustomScaleLayer(Layer):
